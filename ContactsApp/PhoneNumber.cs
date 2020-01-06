@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactsAppUI
+namespace ContactsApp
 {
     /// <summary>
     /// Отдельный класс "Номер телефона".
@@ -19,7 +19,7 @@ namespace ContactsAppUI
         /// <summary>
         /// Свойство поля "Номер". Начинается с 7 и состоит из 11 цифр.
         /// </summary>
-        private long Number
+        public long Number
         {
             get { return _number; }
             set

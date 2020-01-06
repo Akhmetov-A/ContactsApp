@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactsAppUI
+namespace ContactsApp
 {
     /// <summary>
     /// Класс "Контакт". Содержит фамилию, имя, дату рождения, e-mail, id вконтакте.
@@ -73,7 +73,7 @@ namespace ContactsAppUI
         /// <summary>
         /// Поле "Номер телефона". Реализация представлена в отдельном файле.
         /// </summary>
-        private PhoneNumber PhoneNumber { get; set; }
+        public PhoneNumber Phone { get; set; } = new PhoneNumber();
 
         /// <summary>
         /// Свойство поля "День рождения". Содержит информацию о дне, месяце, годе рождения владельца контакта.

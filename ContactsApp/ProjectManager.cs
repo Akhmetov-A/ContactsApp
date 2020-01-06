@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace ContactsAppUI
+namespace ContactsApp
 {
     /// <summary>
     /// Класс "Менеджер проекта". Позволяет сохранять и загружать даннные.
@@ -31,7 +31,7 @@ namespace ContactsAppUI
         /// Метод загрузки
         /// </summary>
         /// <param name="filename">Именование файла</param>
-        private static Project Load(string filename)
+        public static Project Load(string filename)
         {
             Project project = null;
             Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
