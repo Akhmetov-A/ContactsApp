@@ -12,6 +12,7 @@ namespace ContactsApp
     /// </summary>
     public static class ProjectManager
     {
+        //public static string _path = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Contacts.txt";
         /// <summary>
         /// Метод сохранения
         /// </summary>
@@ -20,8 +21,8 @@ namespace ContactsApp
         public static void SaveToFile(Project data, string filename)
         {        
             Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
-            string documents = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            using (StreamWriter sw = new StreamWriter(documents+@"\json.txt"))
+            //string documents = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            using (StreamWriter sw = new StreamWriter(filename))
             using(Newtonsoft.Json.JsonWriter writer = new Newtonsoft.Json.JsonTextWriter(sw))
             {
                 serializer.Serialize(writer, data);
@@ -35,8 +36,8 @@ namespace ContactsApp
         {
             Project project = null;
             Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
-            string documents = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            using (StreamReader sr = new StreamReader(documents + @"\json.txt"))
+            //string documents = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            using (StreamReader sr = new StreamReader(filename))
             using(Newtonsoft.Json.JsonReader reader = new Newtonsoft.Json.JsonTextReader(sr))
             {
                 project = (Project)serializer.Deserialize<Project>(reader);

@@ -71,11 +71,6 @@ namespace ContactsApp
         }
 
         /// <summary>
-        /// Поле "Номер телефона". Реализация представлена в отдельном файле.
-        /// </summary>
-        public PhoneNumber Phone { get; set; } = new PhoneNumber();
-
-        /// <summary>
         /// Свойство поля "День рождения". Содержит информацию о дне, месяце, годе рождения владельца контакта.
         /// </summary>
         public DateTime BirthDay
@@ -83,7 +78,7 @@ namespace ContactsApp
             get { return _birthDay; }
             set
             {
-                if (value>DateTime.Today && value<DateTime.FromBinary(1900))
+                if (value>DateTime.Today || value.Year<1900)
                 {
                     throw new ArgumentException("Дата рождения не может быть раньше 1900 года и позже текущего");
                 }
@@ -91,6 +86,11 @@ namespace ContactsApp
                     _birthDay = value;
             }
         }
+
+        /// <summary>
+        /// Поле "Номер телефона". Реализация представлена в отдельном файле.
+        /// </summary>
+        public PhoneNumber Phone { get; set; } = new PhoneNumber();
 
         /// <summary>
         /// Свойство поля "Электронная почта". Содержит не более 50 символов.

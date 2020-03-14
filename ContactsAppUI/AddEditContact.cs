@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace ContactsApp
 {
-    public partial class AddEditContactForm : Form
+    public partial class AddContact : Form
     {
 
-        Contact _contactnew = new Contact();
+        Contact _contactCurrent = new Contact();
         PhoneNumber _phone = new PhoneNumber();
 
-        public AddEditContactForm()
+        public AddContact()
         {
             InitializeComponent();
             BirthdateTimePicker.MaxDate = DateTime.Now;
@@ -24,14 +24,14 @@ namespace ContactsApp
 
         private void AddEditContactForm_Load(object sender, EventArgs e)
         {
-            if (Data._contactnew != null)
+            if (Data._contactCurrent != null)
             {
-                SurnameTextBox.Text = Data._contactnew.Surname;
-                NameTextBox.Text = Data._contactnew.Name;
-                BirthdateTimePicker.Value = Data._contactnew.BirthDay;
-                PhoneTextBox.Text = Convert.ToString(Data._contactnew.Phone.Number);
-                EmailTextBox.Text = Data._contactnew.Email;
-                VkTextBox.Text = Data._contactnew.IDvk;
+                SurnameTextBox.Text = Data._contactCurrent.Surname;
+                NameTextBox.Text = Data._contactCurrent.Name;
+                BirthdateTimePicker.Value = Data._contactCurrent.BirthDay;
+                PhoneTextBox.Text = Convert.ToString(Data._contactCurrent.Phone.Number);
+                EmailTextBox.Text = Data._contactCurrent.Email;
+                VkTextBox.Text = Data._contactCurrent.IDvk;
             }
         }
 
@@ -39,12 +39,12 @@ namespace ContactsApp
         {
             try
             {
-                _contactnew.Surname = SurnameTextBox.Text;
+                _contactCurrent.Surname = SurnameTextBox.Text;
                 SurnameTextBox.BackColor = Color.White;
             }
             catch (Exception)
             {
-                SurnameTextBox.BackColor = Color.Red;
+                SurnameTextBox.BackColor = Color.Salmon;
             }
         }
 
@@ -52,12 +52,12 @@ namespace ContactsApp
         {
             try
             {
-                _contactnew.Name = NameTextBox.Text;
+                _contactCurrent.Name = NameTextBox.Text;
                 NameTextBox.BackColor = Color.White;
             }
             catch (Exception)
             {
-                NameTextBox.BackColor = Color.Red;
+                NameTextBox.BackColor = Color.Salmon;
             }
         }
 
@@ -65,12 +65,12 @@ namespace ContactsApp
         {
             try
             {
-                _contactnew.BirthDay = BirthdateTimePicker.Value;
+                _contactCurrent.BirthDay = BirthdateTimePicker.Value;
                 BirthdateTimePicker.BackColor = Color.White;
             }
             catch (Exception)
             {
-                BirthdateTimePicker.BackColor = Color.Red;
+                BirthdateTimePicker.BackColor = Color.Salmon;
             }
         }
 
@@ -80,12 +80,12 @@ namespace ContactsApp
             try
             {
                 long.TryParse(PhoneTextBox.Text, out number);
-                _contactnew.Phone.Number = number;
+                _contactCurrent.Phone.Number = number;
                 PhoneTextBox.BackColor = Color.White;
             }
             catch (Exception)
             {
-                PhoneTextBox.BackColor = Color.Red;
+                PhoneTextBox.BackColor = Color.Salmon;
             }
         }
 
@@ -93,12 +93,12 @@ namespace ContactsApp
         {
             try
             {
-                _contactnew.Email = EmailTextBox.Text;
+                _contactCurrent.Email = EmailTextBox.Text;
                 EmailTextBox.BackColor = Color.White;
             }
             catch (Exception)
             {
-                EmailTextBox.BackColor = Color.Red;
+                EmailTextBox.BackColor = Color.Salmon;
             }
         }
 
@@ -106,12 +106,12 @@ namespace ContactsApp
         {
             try
             {
-                _contactnew.IDvk = VkTextBox.Text;
+                _contactCurrent.IDvk = VkTextBox.Text;
                 VkTextBox.BackColor = Color.White;
             }
             catch (Exception)
             {
-                VkTextBox.BackColor = Color.Red;
+                VkTextBox.BackColor = Color.Salmon;
             }
         }
 
@@ -121,15 +121,15 @@ namespace ContactsApp
             try
             {
                 flague = true;
-                _contactnew.Surname = SurnameTextBox.Text;
-                _contactnew.Name = NameTextBox.Text;
-                _contactnew.BirthDay = BirthdateTimePicker.Value;
+                _contactCurrent.Surname = SurnameTextBox.Text;
+                _contactCurrent.Name = NameTextBox.Text;
+                _contactCurrent.BirthDay = BirthdateTimePicker.Value;
                 _phone.Number = System.Int64.Parse(PhoneTextBox.Text);
-                _contactnew.Phone = _phone;
-                _contactnew.Email = EmailTextBox.Text;
-                _contactnew.IDvk = VkTextBox.Text;
-                Data.SurnameDisplay = _contactnew.Surname;
-                Data._contactnew = _contactnew;
+                _contactCurrent.Phone = _phone;
+                _contactCurrent.Email = EmailTextBox.Text;
+                _contactCurrent.IDvk = VkTextBox.Text;
+                Data.SurnameDisplay = _contactCurrent.Surname;
+                Data._contactCurrent = _contactCurrent;
             }
             catch (Exception ex)
             {
@@ -151,11 +151,10 @@ namespace ContactsApp
         public class DataInMainForm
         {
             public string SurnameDisplay;
-            public Contact _contactnew;
+            public Contact _contactCurrent;
         }
 
         public DataInMainForm Data { get; set; } = new DataInMainForm();
 
-       
     }
 }
