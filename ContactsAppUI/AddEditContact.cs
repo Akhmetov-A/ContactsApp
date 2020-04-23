@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace ContactsApp
 {
+    //TODO: неправильное название - из названия непонятно, что это форма, и глаголы в названии не нужны
     public partial class AddContact : Form
     {
 
@@ -117,6 +118,7 @@ namespace ContactsApp
 
         private void OKButton_Click(object sender, EventArgs e)
         {
+            //TODO: вместо флага лучше сделать return
             bool flague;
             try
             {
@@ -148,6 +150,7 @@ namespace ContactsApp
             this.Close();
         }
 
+        //TODO: этот класс не нужен. Должно быть просто свойство типа Contact
         public class DataInMainForm
         {
             public string SurnameDisplay;

@@ -21,6 +21,7 @@ namespace ContactsApp
         {
             InitializeComponent();
             BirthdateTimePicker.MaxDate = DateTime.Now;
+            //TODO: дважды вызываешь загрузку файла, хотя можно сделать один вызов
             if (ProjectManager.Load(_path) != null)
             {
                 _project = ProjectManager.Load(_path);
@@ -42,8 +43,12 @@ namespace ContactsApp
         {
             if (ContactsListBox.SelectedIndex >= 0) 
             {
+                //TODO: неправильное именование, см. требования RSDN
                 Contact _contactDisplay;
                 _contactDisplay = _project.Contacts[ContactsListBox.SelectedIndex];
+                //TODO: ниже есть еще один кусок кода, где присваиваются значения в эти контролы
+                // сделай метод, который принимает на вход контакт и присваивает значения в контролы,
+                // метод вызывать здесь и ниже (избавиться от дублирования)
                 SurnameTextBox.Text = _contactDisplay.Surname;
                 NameTextBox.Text = _contactDisplay.Name;
                 BirthdateTimePicker.Value = _contactDisplay.BirthDay;
@@ -70,6 +75,7 @@ namespace ContactsApp
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //TODO: перед закрытием надо сохранять проект
             this.Close();
         }
 
@@ -145,6 +151,7 @@ namespace ContactsApp
             }
             else
             {
+                //TODO: неправильное именование
                 var i = MessageBox.Show("Удалить этот контакт?", "Подтверждение", MessageBoxButtons.OKCancel);
                 if (i == DialogResult.OK)
                 {
@@ -165,7 +172,9 @@ namespace ContactsApp
         {
             if (FindTextBox.Text == "")
             {
+                //TODO: зачем загружать проект из файла, если он и так хранится в _project?
                 _project = ProjectManager.Load(_path);
+                //TODO: вместо всего while использовать Clear()
                 while (ContactsListBox.Items.Count != 0)
 
                 {
@@ -185,10 +194,11 @@ namespace ContactsApp
 
             else
             {
+                //TODO: см. выше
                 _project = ProjectManager.Load(_path);
                 _sortProject = Project.Sort(_project, FindTextBox.Text);
                 if (_sortProject == null)
-                {
+                {   //TODO: см. выше
                     while (ContactsListBox.Items.Count != 0)
                     {
                         ContactsListBox.Items.RemoveAt(0);
@@ -196,6 +206,7 @@ namespace ContactsApp
                 }
                 else
                 {
+                    //TODO: см. выше
                     while (ContactsListBox.Items.Count != 0)
                     {
                         ContactsListBox.Items.RemoveAt(0);
@@ -206,6 +217,10 @@ namespace ContactsApp
                     }
                 }
             }
+            //TODO: много дублирования, можно сделать проще.
+            //Создай переменную Project и в зависимости от 
+            // FindTextBox.Text присвой туда либо _project, либо _sortProject
+            // после удаляй очищай листбокс и добавляй новые значения
         }
     }
 }
