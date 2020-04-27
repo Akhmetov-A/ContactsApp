@@ -10,13 +10,12 @@ using System.Windows.Forms;
 
 namespace ContactsApp
 {
-    public partial class AddContact : Form
+    public partial class ContactForm : Form
     {
-
-        Contact _contactCurrent = new Contact();
+        public Contact contact { get; set; }
         PhoneNumber _phone = new PhoneNumber();
 
-        public AddContact()
+        public ContactForm()
         {
             InitializeComponent();
             BirthdateTimePicker.MaxDate = DateTime.Now;
@@ -24,14 +23,18 @@ namespace ContactsApp
 
         private void AddEditContactForm_Load(object sender, EventArgs e)
         {
-            if (Data._contactCurrent != null)
+            if (contact != null)
             {
-                SurnameTextBox.Text = Data._contactCurrent.Surname;
-                NameTextBox.Text = Data._contactCurrent.Name;
-                BirthdateTimePicker.Value = Data._contactCurrent.BirthDay;
-                PhoneTextBox.Text = Convert.ToString(Data._contactCurrent.Phone.Number);
-                EmailTextBox.Text = Data._contactCurrent.Email;
-                VkTextBox.Text = Data._contactCurrent.IDvk;
+                SurnameTextBox.Text = contact.Surname;
+                NameTextBox.Text = contact.Name;
+                BirthdateTimePicker.Value = contact.BirthDay;
+                PhoneTextBox.Text = Convert.ToString(contact.Phone.Number);
+                EmailTextBox.Text = contact.Email;
+                VkTextBox.Text = contact.IDvk;
+            }
+            else
+            {
+                contact = new Contact();
             }
         }
 
@@ -39,7 +42,7 @@ namespace ContactsApp
         {
             try
             {
-                _contactCurrent.Surname = SurnameTextBox.Text;
+                contact.Surname = SurnameTextBox.Text;
                 SurnameTextBox.BackColor = Color.White;
             }
             catch (Exception)
@@ -52,7 +55,7 @@ namespace ContactsApp
         {
             try
             {
-                _contactCurrent.Name = NameTextBox.Text;
+                contact.Name = NameTextBox.Text;
                 NameTextBox.BackColor = Color.White;
             }
             catch (Exception)
@@ -65,7 +68,7 @@ namespace ContactsApp
         {
             try
             {
-                _contactCurrent.BirthDay = BirthdateTimePicker.Value;
+                contact.BirthDay = BirthdateTimePicker.Value;
                 BirthdateTimePicker.BackColor = Color.White;
             }
             catch (Exception)
@@ -80,7 +83,7 @@ namespace ContactsApp
             try
             {
                 long.TryParse(PhoneTextBox.Text, out number);
-                _contactCurrent.Phone.Number = number;
+                contact.Phone.Number = number;
                 PhoneTextBox.BackColor = Color.White;
             }
             catch (Exception)
@@ -93,7 +96,7 @@ namespace ContactsApp
         {
             try
             {
-                _contactCurrent.Email = EmailTextBox.Text;
+                contact.Email = EmailTextBox.Text;
                 EmailTextBox.BackColor = Color.White;
             }
             catch (Exception)
@@ -106,7 +109,7 @@ namespace ContactsApp
         {
             try
             {
-                _contactCurrent.IDvk = VkTextBox.Text;
+                contact.IDvk = VkTextBox.Text;
                 VkTextBox.BackColor = Color.White;
             }
             catch (Exception)
@@ -117,44 +120,27 @@ namespace ContactsApp
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            bool flague;
             try
-            {
-                flague = true;
-                _contactCurrent.Surname = SurnameTextBox.Text;
-                _contactCurrent.Name = NameTextBox.Text;
-                _contactCurrent.BirthDay = BirthdateTimePicker.Value;
+            {                
+                contact.Surname = SurnameTextBox.Text;
+                contact.Name = NameTextBox.Text;
+                contact.BirthDay = BirthdateTimePicker.Value;
                 _phone.Number = System.Int64.Parse(PhoneTextBox.Text);
-                _contactCurrent.Phone = _phone;
-                _contactCurrent.Email = EmailTextBox.Text;
-                _contactCurrent.IDvk = VkTextBox.Text;
-                Data.SurnameDisplay = _contactCurrent.Surname;
-                Data._contactCurrent = _contactCurrent;
+                contact.Phone = _phone;
+                contact.Email = EmailTextBox.Text;
+                contact.IDvk = VkTextBox.Text;
+                DialogResult = DialogResult.OK;
+                this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Неверный ввод данных");
-                flague = false;
-            }
-            if (flague == true) 
-            {
-                DialogResult = DialogResult.OK;
-                this.Close();
-            }
+            } 
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        public class DataInMainForm
-        {
-            public string SurnameDisplay;
-            public Contact _contactCurrent;
-        }
-
-        public DataInMainForm Data { get; set; } = new DataInMainForm();
-
     }
 }

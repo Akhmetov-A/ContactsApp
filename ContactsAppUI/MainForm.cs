@@ -21,10 +21,7 @@ namespace ContactsApp
         {
             InitializeComponent();
             BirthdateTimePicker.MaxDate = DateTime.Now;
-            if (ProjectManager.Load(_path) != null)
-            {
-                _project = ProjectManager.Load(_path);
-            }
+            _project = ProjectManager.Load(_path);
             foreach (Contact s in _project.Contacts)
             {
                 ContactsListBox.Items.Add(s.Surname);
@@ -42,14 +39,9 @@ namespace ContactsApp
         {
             if (ContactsListBox.SelectedIndex >= 0) 
             {
-                Contact _contactDisplay;
-                _contactDisplay = _project.Contacts[ContactsListBox.SelectedIndex];
-                SurnameTextBox.Text = _contactDisplay.Surname;
-                NameTextBox.Text = _contactDisplay.Name;
-                BirthdateTimePicker.Value = _contactDisplay.BirthDay;
-                PhoneTextBox.Text = Convert.ToString(_contactDisplay.Phone.Number);
-                EmailTextBox.Text = _contactDisplay.Email;
-                VkTextBox.Text = _contactDisplay.IDvk;
+                Contact contact;
+                contact = _project.Contacts[ContactsListBox.SelectedIndex];
+                Assignment(contact);
             }
         }
 
@@ -70,6 +62,7 @@ namespace ContactsApp
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ProjectManager.SaveToFile(_project, _path);
             this.Close();
         }
 
@@ -96,13 +89,13 @@ namespace ContactsApp
 
         public void Add()
         {
-            var addContactForm = new AddContact();
-            var UpdatedData = addContactForm.Data;
+            var addContactForm = new ContactForm();
+            var UpdatedData = addContactForm;
             var i = addContactForm.ShowDialog();
             if (i == DialogResult.OK)
             {
-                _project.Contacts.Add(UpdatedData._contactCurrent);
-                ContactsListBox.Items.Add(UpdatedData.SurnameDisplay);
+                _project.Contacts.Add(UpdatedData.contact);
+                ContactsListBox.Items.Add(UpdatedData.contact.Surname);
                 _project.Sort(_project.Contacts);
             }
             ProjectManager.SaveToFile(_project, _path);
@@ -116,21 +109,16 @@ namespace ContactsApp
             }
             else
             {
-                AddContact addContactForm = new AddContact();
-                addContactForm.Data._contactCurrent = _project.Contacts[ContactsListBox.SelectedIndex];
-                addContactForm.Data.SurnameDisplay = _project.Contacts[ContactsListBox.SelectedIndex].Surname;
+                ContactForm addContactForm = new ContactForm();
+                addContactForm.contact = _project.Contacts[ContactsListBox.SelectedIndex];
+                addContactForm.contact.Surname = _project.Contacts[ContactsListBox.SelectedIndex].Surname;
                 addContactForm.ShowDialog();
-                var UpdatedData = addContactForm.Data;
+                var UpdatedData = addContactForm.contact;
                 _project.Contacts.RemoveAt(ContactsListBox.SelectedIndex);
                 ContactsListBox.Items.RemoveAt(ContactsListBox.SelectedIndex);
-                _project.Contacts.Add(UpdatedData._contactCurrent);
-                ContactsListBox.Items.Add(UpdatedData.SurnameDisplay);
-                SurnameTextBox.Text = UpdatedData._contactCurrent.Surname;
-                NameTextBox.Text = UpdatedData._contactCurrent.Name;
-                BirthdateTimePicker.Value = UpdatedData._contactCurrent.BirthDay;
-                PhoneTextBox.Text = Convert.ToString(UpdatedData._contactCurrent.Phone.Number);
-                EmailTextBox.Text = UpdatedData._contactCurrent.Email;
-                VkTextBox.Text = UpdatedData._contactCurrent.IDvk;
+                _project.Contacts.Add(UpdatedData);
+                ContactsListBox.Items.Add(UpdatedData.Surname);
+                Assignment(UpdatedData);
                 _project.Sort(_project.Contacts);
                 ProjectManager.SaveToFile(_project, _path);
             }
@@ -145,8 +133,8 @@ namespace ContactsApp
             }
             else
             {
-                var i = MessageBox.Show("Удалить этот контакт?", "Подтверждение", MessageBoxButtons.OKCancel);
-                if (i == DialogResult.OK)
+                var deleteItem = MessageBox.Show("Удалить этот контакт?", "Подтверждение", MessageBoxButtons.OKCancel);
+                if (deleteItem == DialogResult.OK)
                 {
                     _project.Contacts.RemoveAt(ContactsListBox.SelectedIndex);
                     ContactsListBox.Items.RemoveAt(ContactsListBox.SelectedIndex);
@@ -161,51 +149,22 @@ namespace ContactsApp
             }
         }
 
+        public void Assignment (Contact contact)
+        {
+            SurnameTextBox.Text = contact.Surname;
+            NameTextBox.Text = contact.Name;
+            BirthdateTimePicker.Value = contact.BirthDay;
+            PhoneTextBox.Text = Convert.ToString(contact.Phone.Number);
+            EmailTextBox.Text = contact.Email;
+            VkTextBox.Text = contact.IDvk;
+        }
+
         private void FindTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (FindTextBox.Text == "")
-            {
-                _project = ProjectManager.Load(_path);
-                while (ContactsListBox.Items.Count != 0)
-
-                {
-
-                    ContactsListBox.Items.RemoveAt(0);
-
-                }
-
-                for (int i = 0; i != _project.Contacts.Count; i++)
-
-                {
-
-                    ContactsListBox.Items.Add(_project.Contacts[i].Surname);
-
-                }
-            }
-
-            else
-            {
-                _project = ProjectManager.Load(_path);
-                _sortProject = Project.Sort(_project, FindTextBox.Text);
-                if (_sortProject == null)
-                {
-                    while (ContactsListBox.Items.Count != 0)
-                    {
-                        ContactsListBox.Items.RemoveAt(0);
-                    }
-                }
-                else
-                {
-                    while (ContactsListBox.Items.Count != 0)
-                    {
-                        ContactsListBox.Items.RemoveAt(0);
-                    }
-                    for (int i = 0; i != _sortProject.Contacts.Count; i++)
-                    {
-                        ContactsListBox.Items.Add(_sortProject.Contacts[i].Surname);
-                    }
-                }
-            }
+            ContactsListBox.DataSource = null;
+            ContactsListBox.DataSource = _project.Sort(_project.Contacts);
+            ContactsListBox.DisplayMember = "Surname";
+            ProjectManager.SaveToFile(_project, _path);
         }
     }
 }

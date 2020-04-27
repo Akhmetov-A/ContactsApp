@@ -1,6 +1,6 @@
 ﻿namespace ContactsApp
 {
-    partial class AddContact
+    partial class ContactForm
     {
         /// <summary>
         /// Required designer variable.
@@ -186,7 +186,7 @@
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // AddContact
+            // ContactForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -207,7 +207,7 @@
             this.Controls.Add(this.SurnameLabel);
             this.MaximumSize = new System.Drawing.Size(1000, 279);
             this.MinimumSize = new System.Drawing.Size(421, 279);
-            this.Name = "AddContact";
+            this.Name = "ContactForm";
             this.ShowIcon = false;
             this.Text = "Add/Edit Contact";
             this.Load += new System.EventHandler(this.AddEditContactForm_Load);
