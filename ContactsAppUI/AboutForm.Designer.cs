@@ -127,6 +127,7 @@
             this.Controls.Add(this.VersionLabel);
             this.Controls.Add(this.HeadLabel);
             this.Name = "AboutForm";
+            this.ShowIcon = false;
             this.Text = "About";
             this.ResumeLayout(false);
             this.PerformLayout();
