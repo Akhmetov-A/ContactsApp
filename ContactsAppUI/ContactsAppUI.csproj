@@ -133,7 +133,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-</PostBuildEvent>
+    <PostBuildEvent>md $(SolutionDir)InstallScripts
+md $(SolutionDir)InstallScripts\Release
+md $(SolutionDir)InstallScripts\Installers
+xcopy $(ProjectDir)$(OutDir)*dll $(SolutionDir)InstallScripts\Release
+xcopy $(ProjectDir)$(OutDir)*exe $(SolutionDir)InstallScripts\Release
+"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" $(SolutionDir)InstallScripts\Installers\installer.iss</PostBuildEvent>
   </PropertyGroup>
 </Project>
