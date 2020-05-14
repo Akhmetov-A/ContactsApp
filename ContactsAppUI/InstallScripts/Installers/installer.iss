@@ -25,8 +25,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\User\source\repos\ContactsApp\ContactsAppUI\InstallScripts\Release\*.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\User\source\repos\ContactsApp\ContactsAppUI\InstallScripts\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Release\*.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
